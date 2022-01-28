@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Order Form</title>
+        <style>
+            body{
+                height: 100vh;
+                width: 100vw;
+                margin: 0px;
+                background-image: linear-gradient(rgba(0,0,0,0.5),rgba(0,0,0,0.5)),url(background.png);
+                background-position: center;
+                background-size: cover;
+                position: relative;
+                color: #fff;
+            }
+            input[type=text], input[type=password] {
+                width: 100%;
+                padding: 12px 20px;
+                margin: 10px 0;
+                display: inline-block;
+                border: 1px solid rgb(0, 0, 0);
+                box-sizing: border-box;
+            }
+            button {
+                background-color: #f44336;
+                color: rgb(255, 255, 255);
+                padding: 14px 20px;
+                margin: 8px 0;
+                border: none;
+                cursor: pointer;
+                width: 100%;
+            }
+            button:hover {
+                opacity: 0.8;
+            }
+            .container {
+                padding: 10px;
+            }
+            span.psw {
+                float: right;
+                padding-top: 16px;
+            }
+            /* Change styles for span and cancel button on extra small screens */
+            @media screen and (max-width: 300px) {
+            span.psw {
+                display: block;
+                float: none;
+            }}
+            label {
+            display: block;
+            font: 1rem 'Fira Sans', sans-serif;
+            }
+            input,
+            label {
+                margin: .4rem 0;
+            }
+        </style>
+    </head>
+    <body>
+        <section class="login">
+            <div class="container">
+                <label for="start">Start date:</label>
+                <input type="date" id="start" name="trip-start"
+                       value="2018-07-22"
+                       min="2018-01-01" max="2018-12-31">                
+                <label for="psw"><b>Customer Name</b></label>
+                <input type="text" placeholder="Customer Name" name="uname" required>
+                <h2>Order Type (Please Choose one of the options:) </h2>
+                <div class="custom-control custom-switch">
+                    <input type="checkbox" class="custom-control-input" id="customSwitch1">
+                    <label class="custom-control-label" for="customSwitch1">Delivery</label>
+                </div>                
+                <input type="text" placeholder="Customer's Address" name="uname" required>
+                <div class="custom-control custom-switch">
+                    <input type="checkbox" class="custom-control-input" id="customSwitch1">
+                    <label class="custom-control-label" for="customSwitch1">Pick-Up</label>
+                </div>
+                <button href= "" type="text" id="subbtn" class="btn btn-outline-primary mb-3 w-100">Submit</button>
+            </div>     
+        </section>
+        <script type="module">
+            // Import the functions you need from the SDKs you need
+             import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.4/firebase-app.js";
+             import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.6.4/firebase-analytics.js";
+             // TODO: Add SDKs for Firebase products that you want to use
+             // https://firebase.google.com/docs/web/setup#available-libraries
+         
+             // Your web app's Firebase configuration
+             // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+             const firebaseConfig = {
+             apiKey: "AIzaSyDOAwSixG-mR6rSGcCMiQRiIzeS266G_DE",
+             authDomain: "pisao-retake.firebaseapp.com",
+             databaseURL: "https://pisao-retake-default-rtdb.firebaseio.com",
+             projectId: "pisao-retake",
+             storageBucket: "pisao-retake.appspot.com",
+             messagingSenderId: "654723713413",
+             appId: "1:654723713413:web:3b6ce3aaf760c707a71cec",
+             measurementId: "G-MVZ3PVLL04"
+             };
+           
+             // Initialize Firebase
+             const app = initializeApp(firebaseConfig);
+             const analytics = getAnalytics(app);
+     
+             import { getDatabase, ref, set, child, get, update, remove } 
+                from "https://www.gstatic.com/firebasejs/9.6.4/firebase-database.js";
+             const db = getDatabase();
+        </script>
+    </body>
+</html>
