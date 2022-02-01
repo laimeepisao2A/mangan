@@ -49,7 +49,11 @@
                 margin: auto;
             }
             h1{
-                text-align: center;
+                text-align: left;
+            }
+            table, tr, th{
+                position: relative;
+                align-items: center;
             }
         </style>
     </head>
@@ -59,8 +63,8 @@
                 <a href="#"><img src="Logo_mangandakita2.png"></a>
                 <div class="nav-links">
                     <ul>
-                        <li class="nav-item"><a id="userlink" class="nav-link" href="user.html">USERNAME</a></li>
-                        <li class="nav-item1"><a id="signoutlink" class="nav-link">LOGOUT</a></li>
+                        <!-- <li class="nav-item"><a id="userlink" class="nav-link" href="user.html">USERNAME</a></li> -->
+                        <li class="nav-item1"><a id="signoutlink" class="nav-link" href="index.html">LOGOUT</a></li>
                     </ul>
                 </div>
             </nav>  
@@ -89,17 +93,6 @@
         window.onload = function(){
             getUsername();
             if(currentUser==null){
-                userlink.innerText="Create New Account";
-                userlink.classList.replace=("nav-item","btn");
-                userlink.classList.add("btn-primary");
-                userlink.href = "register.html";
-
-                signoutlink.innerText = "Login";
-                signoutlink.classList.replace("nav-item","btn");
-                signoutlink.classList.add("btn-success");
-                signoutlink.href="index.html";
-            }
-            else{
                 userlink.innerText=currentUser.username;
                 header.innerText = "welcome" + currentUser.fullname;
                 userlink.classList.replace=("nav-item","btn");
@@ -111,11 +104,22 @@
                 signoutlink.classList.remove("btn-success");
                 signoutlink.href="javascript:signout(index.html)";
             }
+            else{
+                userlink.innerText="Create New Account";
+                userlink.classList.replace=("nav-item","btn");
+                userlink.classList.add("btn-primary");
+                userlink.href = "register.html";
+
+                signoutlink.innerText = "Login";
+                signoutlink.classList.replace("nav-item","btn");
+                signoutlink.classList.add("btn-success");
+                signoutlink.href="index.html";
+            }
         }
         
     </script>
     <h1>LIST OF ORDERS</h1>
-    <!-- <table>
+    <table>
     <tr>
         <th>App Name</th>
         <th>Description</th>
@@ -132,32 +136,6 @@
             <br> It was originally created in 1988 by Thomas and John Knoll. Since then, the software has become the 
             <br> industry standard not only in raster graphics editing, but in digital art as a whole.</td>
     </tr>
-    <tr>
-        <td>Canva</td>
-        <td>Canva is an Australian graphic design platform, used to create social media graphics, presentations, posters, documents and other visual content. 
-            <br> The app includes templates for users to use.</td>
-    </tr>
-    <tr>
-        <td>Firebase</td>
-        <td>Firebase is a platform developed by Google for creating mobile and web applications. 
-            <br> It was originally an independent company founded in 2011. In 2014, Google acquired the platform and it is now 
-            <br> their flagship offering for app development. </td>
-    </tr>
-    <tr>
-        <td>HTML</td>
-        <td>The HyperText Markup Language, or HTML is the standard markup language for documents designed to be displayed in a web browser. 
-            <br> It can be assisted by technologies such as Cascading Style Sheets and scripting languages such as JavaScript. </td>
-    </tr>
-    <tr>
-        <td>CSS</td>
-        <td>Cascading Style Sheets is a style sheet language used for describing the presentation of a document written in a markup language such as HTML. 
-            <br>    CSS is a cornerstone technology of the World Wide Web, alongside HTML and JavaScript.</td>
-    </tr>
-    <tr>
-        <td>GitHub</td>
-        <td>GitHub, Inc. is a provider of Internet hosting for software development and version control using Git. 
-            <br> offers the distributed version control and source code management functionality of Git, plus its own features.</td>
-    </tr>
-    </table> -->
+</table>
     </body>
 </html>
