@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Profile</title>
+    <style>
+    label{
+        display: inline-block; 
+        width: 80px;
+    }  
+    input,select{
+        width:120px;
+    }
+        body{
+            height: 100vh;
+            width: 100vw;
+            margin: 0px;
+            background-image: linear-gradient(rgba(0,0,0,0.5),rgba(0,0,0,0.5)),url(background.png);
+            background-position: center;
+            background-size: cover;
+            position: relative;
+            color: #fff;
+        }
+    </style>
+</head>
+<body>
+
+    <label>First Name</label> <input id="fnamebox" type="text"> <br><br>
+    <label>Last Name</label> <input id="lnamebox" type="text"> <br><br>
+    <label>Email</label> <input id="embox" type="text"> <br><br>
+    <label>Contact</label> <input id="conbox" type="text"> <br><br>
+    <label>Username</label> <input id="usebox" type="text"> <br><br>
+
+<!-- 
+    <label>Name</label> <input id="Namebox" type="text"> <br><br>
+    <label>RollNo</label> <input id="Rollbox" type="text"> <br><br>
+    <label>Section</label> <input id="Secbox" type="text"> <br><br>
+    <label>Gender</label> 
+    <select id="Genbox">
+        <option value="Male"> Male</option>
+        <option value="Female"> Female</option>
+    </select> 
+-->
+
+    <hr>
+    <button id="Insbtn">INSERT</button>
+    <button id="Selbtn">SELECT</button>
+    <button id="Updbtn">UPDATE</button>
+    <button id="Delbtn">DELETE</button>
+
+    <script type="module">
+       // Import the functions you need from the SDKs you need
+       import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.4/firebase-app.js";
+        import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.6.4/firebase-analytics.js";
+        // TODO: Add SDKs for Firebase products that you want to use
+        // https://firebase.google.com/docs/web/setup#available-libraries
+    
+        // Your web app's Firebase configuration
+        // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+        const firebaseConfig = {
+            apiKey: "AIzaSyCivEq77rR-5OUaCGR4vxxL3HpjqiJVcG8",
+            authDomain: "pisao-assessment.firebaseapp.com",
+            databaseURL: "https://pisao-assessment-default-rtdb.firebaseio.com",
+            projectId: "pisao-assessment",
+            storageBucket: "pisao-assessment.appspot.com",
+            messagingSenderId: "1014832089533",
+            appId: "1:1014832089533:web:3a9c0363ce81dc4abaead4",
+            measurementId: "G-D3YGV8Y9WG"
+        };
+      
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const analytics = getAnalytics(app);
+
+        import { getDatabase, ref, set, child, get, update, remove } 
+            from "https://www.gstatic.com/firebasejs/9.6.4/firebase-database.js";
+
+        const db = getDatabase();
+
+        var fname = document.getElementById("fnamebox");
+        var lname = document.getElementById("lnamebox");
+        var email = document.getElementById("embox");
+        var contact = document.getElementById("conbox");
+        var username = document.getElementById("usebox");
+
+            // var namebox = document.getElementById("Namebox");
+            // var rollbox = document.getElementById("Rollbox");
+            // var secbox = document.getElementById("Secbox");
+            // var genbox = document.getElementById("Genbox");
+
+            var insBtn = document.getElementById("Insbtn");
+            var selBtn = document.getElementById("Selbtn");
+            var updBtn = document.getElementById("Updbtn");
+            var delBtn = document.getElementById("Delbtn");
+
+            function InsertData(){
+                set(ref(db, "UsersList/" + username.value),{
+                    fname: fname.value,
+                    lname: lname.value,
+                    contact: contact.value,
+                    email: email.value,
+                    username: username.value
+                })
+                .then(()=>{
+                    alert("The data stored successfully!");
+                })
+                .catch((error)=>{
+                    alert("error"+ error);
+                })
+            }
+            function SelectData(){
+                const dbref = ref(db);
+
+                get(child(dbref,"UsersList/" + username.value)).then((snapshot)=>{
+                    if(snapshot.exists()){
+                        fname.value = snapshot.val().fname;
+                        lname.value = snapshot.val().lname;
+                        email.value = snapshot.val().email;
+                        contact.value = snapshot.val().contact;
+                    }
+                    else{
+                        alert("No data found");
+                    }
+                })
+                .catch((error)=>{
+                    alert("error"+ error);
+                });
+            }
+            function UpdateData(){
+                update(ref(db, "UsersList/"+username.value),{
+                    fname: fname.value,
+                    lname: lname.value,
+                    contact: contact.value,
+                    email: email.value
+                })
+                .then(()=>{
+                    alert("Updated Sucessfully!");
+                })
+                .catch((error)=>{
+                    alert("error"+ error);
+                })
+            }
+            function DeleteData(){
+                remove(ref(db, "UsersList/"+username.value),{
+                })
+                .then(()=>{
+                    alert("Data Removed");
+                })
+                .catch((error)=>{
+                    alert("error"+ error);
+                })
+            }
+            insBtn.addEventListener('click', InsertData);
+            selBtn.addEventListener('click', SelectData);
+            updBtn.addEventListener('click', UpdateData);
+            delBtn.addEventListener('click', DeleteData);
+      </script>
+</body>
+</html>

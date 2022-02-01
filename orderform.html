@@ -43,71 +43,161 @@
                 float: right;
                 padding-top: 16px;
             }
-            /* Change styles for span and cancel button on extra small screens */
-            @media screen and (max-width: 300px) {
-            span.psw {
-                display: block;
-                float: none;
-            }}
-            label {
-            display: block;
-            font: 1rem 'Fira Sans', sans-serif;
-            }
-            input,
-            label {
-                margin: .4rem 0;
-            }
         </style>
     </head>
     <body>
-        <section class="login">
-            <div class="container">
-                <label for="start">Start date:</label>
-                <input type="date" id="start" name="trip-start"
-                       value="2018-07-22"
-                       min="2018-01-01" max="2018-12-31">                
-                <label for="psw"><b>Customer Name</b></label>
-                <input type="text" placeholder="Customer Name" name="uname" required>
-                <h2>Order Type (Please Choose one of the options:) </h2>
-                <div class="custom-control custom-switch">
-                    <input type="checkbox" class="custom-control-input" id="customSwitch1">
-                    <label class="custom-control-label" for="customSwitch1">Delivery</label>
-                </div>                
-                <input type="text" placeholder="Customer's Address" name="uname" required>
-                <div class="custom-control custom-switch">
-                    <input type="checkbox" class="custom-control-input" id="customSwitch1">
-                    <label class="custom-control-label" for="customSwitch1">Pick-Up</label>
+        <section class="container content-section">
+            <h1>Order Here <span class="badge badge-secondary"></span></h1>
+            <div class="container-xxl" style="padding-inline: 25%; ">
+            <div class="row mb-3"> 
+                  <div class="col-md-6">
+                    <label for="validationDefault01" class="form-label">Date</label>
+                    <input type="date" class="form-control" id="datint" required>
+                  </div>
+        
+                  <div class="col-md-6">
+                    <label for="validationDefault04" class="form-label">Order Type</label>
+                    <select class="form-select" id="orderint" required>
+                        <option selected disabled value="">Choose...</option>
+                        <option value ="Delivery">Delivery</option>
+                        <option value = "Pickup">Pick-up</option>
+                    </select>
+                  </div>
+            </div>
+            <div class="row mb-3"> 
+                  <div class="col-md-12">
+                    <label for="validationDefault02" class="form-label">Customer's Name</label>
+                    <input type="text" class="form-control" id="nameint"  required>
+                  </div>
+        
+                  <div class="col-md-12">
+                    <label for="validationDefault05" class="form-label">Address</label>
+                    <input type="text" class="form-control" id="addint" required>
+                  </div>
                 </div>
-                <button href= "" type="text" id="subbtn" class="btn btn-outline-primary mb-3 w-100">Submit</button>
-            </div>     
-        </section>
-        <script type="module">
+                <div class="row mb-3"> 
+                  <div class="col-md-6">
+                    <label for="validationDefault04" class="form-label">Item</label>
+                    <input type="text" class="form-control" id="item1" required>
+                  </div>
+                  <div class="col-md-6">
+                    <label for="validationDefault04" class="form-label">Quantity</label>
+                    <select class="form-select" id="quan1" required>
+                        <option selected disabled value="">Choose...</option>
+                        <option value ="1">1</option>
+                        <option value = "2">2</option>
+                        <option value = "3">3</option>
+                        <option value = "4">4</option>
+                        <option value = "5">5</option>
+                    </select>
+                  </div>
+            </div>
+            <br>
+            <div class="row mb-3"> 
+              <div class="col-md-6">
+                <label for="validationDefault04" class="form-label">Item</label>
+                <input type="text" class="form-control" id="item2" required>
+            </div>
+            <div class="col-md-6">
+                <label for="validationDefault04" class="form-label">Quantity</label>
+                <select class="form-select" id="quan2" >
+                    <option selected disabled value="">Choose...</option>
+                    <option value ="1">1</option>
+                    <option value = "2">2</option>
+                    <option value = "3">3</option>
+                    <option value = "4">4</option>
+                    <option value = "5">5</option>
+                </select>
+            </div>
+            </div>
+            <div class="row mb-3"> 
+            <br>
+            <div class="col-md-6">
+                <label for="validationDefault04" class="form-label">Item</label>
+                <input type="text" class="form-control" id="item3" required>
+            </div>
+            <div class="col-md-6">
+                <label for="validationDefault04" class="form-label">Quantity</label>
+                <select class="form-select" id="quan3" >
+                    <option selected disabled value="">Choose...</option>
+                    <option value ="1">1</option>
+                    <option value = "2">2</option>
+                    <option value = "3">3</option>
+                    <option value = "4">4</option>
+                    <option value = "5">5</option>
+                </select>
+              </div>
+            </div>
+            <br>
+            <button class="btn btn-success w-100 mb-3" type="submit" id="order">Proceed</button>
+          </section>
+
+          <script type="module">
             // Import the functions you need from the SDKs you need
-             import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.4/firebase-app.js";
-             import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.6.4/firebase-analytics.js";
-             // TODO: Add SDKs for Firebase products that you want to use
-             // https://firebase.google.com/docs/web/setup#available-libraries
-         
-             // Your web app's Firebase configuration
-             // For Firebase JS SDK v7.20.0 and later, measurementId is optional
-             const firebaseConfig = {
-             apiKey: "AIzaSyDOAwSixG-mR6rSGcCMiQRiIzeS266G_DE",
-             authDomain: "pisao-retake.firebaseapp.com",
-             databaseURL: "https://pisao-retake-default-rtdb.firebaseio.com",
-             projectId: "pisao-retake",
-             storageBucket: "pisao-retake.appspot.com",
-             messagingSenderId: "654723713413",
-             appId: "1:654723713413:web:3b6ce3aaf760c707a71cec",
-             measurementId: "G-MVZ3PVLL04"
-             };
-           
-             // Initialize Firebase
-             const app = initializeApp(firebaseConfig);
-             const analytics = getAnalytics(app);
-     
-             import { getDatabase, ref, set, child, get, update, remove } 
+            import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.4/firebase-app.js";
+            import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.6.4/firebase-analytics.js";
+            // TODO: Add SDKs for Firebase products that you want to use
+            // https://firebase.google.com/docs/web/setup#available-libraries
+          
+            // Your web app's Firebase configuration
+            const firebaseConfig = {
+                apiKey: "AIzaSyCivEq77rR-5OUaCGR4vxxL3HpjqiJVcG8",
+                authDomain: "pisao-assessment.firebaseapp.com",
+                databaseURL: "https://pisao-assessment-default-rtdb.firebaseio.com",
+                projectId: "pisao-assessment",
+                storageBucket: "pisao-assessment.appspot.com",
+                messagingSenderId: "1014832089533",
+                appId: "1:1014832089533:web:3a9c0363ce81dc4abaead4",
+                measurementId: "G-D3YGV8Y9WG"
+            };
+                
+            // Initialize Firebase
+            const app = initializeApp(firebaseConfig);
+    
+            import { getDatabase, ref, set, child, get, update, remove } 
                 from "https://www.gstatic.com/firebasejs/9.6.4/firebase-database.js";
-             const db = getDatabase();
+    
+            const db = getDatabase();
+
+            const date = document.getElementById('datint');
+            const orderType = document.getElementById('orderint');
+            const customerName = document.getElementById('nameint');
+            const address = document.getElementById('addint');
+
+            const order1 = document.getElementById('item1');
+            const order2 = document.getElementById('item2');
+            const order3 = document.getElementById('item3');
+
+            const quantity1 = document.getElementById('quan1');
+            const quantity2 = document.getElementById('quan2');
+            const quantity3 = document.getElementById('quan3');
+
+            const placeorder = document.getElementById('order');
+
+            function InsertData(){
+            set(ref(db, "CustomerOrders/"+ customerName.value),{
+              Date: date.value,
+              // OrderNo: order.value,
+              OrderType: orderType.value,
+              CustomersName: customerName.value,
+              CustomerAddress: address.value,
+              item1 : order1.value,
+              item2 : order2.value,
+              item3 : order3.value,
+              quan1 : quantity1.value,
+              quan2 : quantity2.value,
+              quan3 : quantity3.value,
+            }
+            )
+            .then(()=>{
+              alert("Placed Order Successfully");
+            })
+            .catch((error)=>{
+              alert("error"+ error);
+            })
+        }
+        placeorder.addEventListener('click', InsertData);
+
         </script>
     </body>
 </html>

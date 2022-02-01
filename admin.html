@@ -1,100 +1,91 @@
 <!DOCTYPE html>
-<html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<html>
+<head>
+    <title>Admin Login</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+    <style>
+         body{
+                height: 100vh;
+                width: 100vw;
+                margin: 0px;
+                background-image: linear-gradient(rgba(0,0,0,0.5),rgba(0,0,0,0.5)),url(background.png);
+                background-position: center;
+                background-size: cover;
+                position: relative;
+                color: #fff;
+            }
+    </style>
+</head>
+<body>
+<div class="container">
+   <h1>Admin Login</h1>
+   <br>
+    <div class="form-group">
+        <label for="email">Email:</label>
+        <input type="email" class="form-control" id="email">
+    </div>
+    <div class="form-group">
+        <label for="pass">Password:</label>
+        <input type="password" class="form-control" id="pass">
+    </div>
+    <div class="custom-control custom-switch">
+        <input type="checkbox" class="custom-control-input" id="customSwitch1">
+        <label class="custom-control-label" for="customSwitch1">Keep me Logged In</label>
+    </div>
+      <button type="submit" id="btnLogin" class="btn btn-primary">Login</button>
+</div>
+</body>
 
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+<script src="https://www.gstatic.com/firebasejs/5.5.7/firebase.js"></script>
+<script>
+  var config = {
+    apiKey: "AIzaSyCivEq77rR-5OUaCGR4vxxL3HpjqiJVcG8",
+    authDomain: "pisao-assessment.firebaseapp.com",
+    databaseURL: "https://pisao-assessment-default-rtdb.firebaseio.com",
+    projectId: "pisao-assessment",
+    storageBucket: "pisao-assessment.appspot.com",
+    messagingSenderId: "1014832089533",
+  };
+  firebase.initializeApp(config);
 
-        <title>ADMIN</title>
-        <Style>
-        body{
-            height: 100vh;
-            width: 100vw;
-            margin: 0px;
-            background-image: linear-gradient(rgba(0,0,0,0.5),rgba(0,0,0,0.5)),url(background.png);
-            background-position: center;
-            background-size: cover;
-            position: relative;
-            color: #fff;
+  var auth = firebase.auth();
+  var email     = document.getElementById('email');
+  var pass      = document.getElementById('pass');
+  var btnLogin  = document.getElementById('btnLogin');
+
+  btnLogin.addEventListener('click', funcLogin);
+ 
+
+  function funcLogin() {
+    auth.signInWithEmailAndPassword(email.value, pass.value)
+        .then(function(data){
+            console.log(data);
+            window.location="account.html";
+            alert("Login as Admin Successfully");
+        }).catch(function(err){
+            alert(err)
+        })
+  }
+auth.onAuthStateChanged(function(user){
+        if(user) {
+            btnLogout.classList.remove('hidden');
+            btnLogin.classList.add('hidden');
+            
+        } else {
+            btnLogout.classList.add('hidden');
+            btnLogin.classList.remove('hidden');
         }
-    </Style>
-    </head>
-    <body>
+  })
+//   function funcLogout() {
+//     auth.signOut().then(function(){
+//         alert("Logout as Admin Successfully")
+//     }).catch(function(err){
+//         alert(err)
+//     })
+//   }
 
-        <div class="container">
-             <h3>Login admin</h3>
-             <div class="form-group">
-                 <label for="email">Email address:</label>
-                 <input type="email" class="form-control" id="email">
-             </div>
-             <div class="form-group">
-                 <label for="pass">Password:</label>
-                 <input type="password" class="form-control" id="pass">
-             </div>
-               <button type="submit" id="btnLogin" class="btn btn-primary">Login</button>
-               <button type="submit" id="btnLogout" class="btn btn-danger hidden">logout</button>
-         </div>
-
-    </body>
-        <script type="module">
-            // Import the functions you need from the SDKs you need
-             import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.4/firebase-app.js";
-             import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.6.4/firebase-analytics.js";
-             // TODO: Add SDKs for Firebase products that you want to use
-             // https://firebase.google.com/docs/web/setup#available-libraries
-         
-             // Your web app's Firebase configuration
-             // For Firebase JS SDK v7.20.0 and later, measurementId is optional
-             const firebaseConfig = {
-             apiKey: "AIzaSyDOAwSixG-mR6rSGcCMiQRiIzeS266G_DE",
-             authDomain: "pisao-retake.firebaseapp.com",
-             databaseURL: "https://pisao-retake-default-rtdb.firebaseio.com",
-             projectId: "pisao-retake",
-             storageBucket: "pisao-retake.appspot.com",
-             messagingSenderId: "654723713413",
-             appId: "1:654723713413:web:3b6ce3aaf760c707a71cec",
-             measurementId: "G-MVZ3PVLL04"
-             };
-           
-             // Initialize Firebase
-             const app = initializeApp(firebaseConfig);
-             const analytics = getAnalytics(app);
-     
-             import { getAuth, isSignInWithEmailLink, signInWithEmailLink } from "firebase/auth";
-
-            // Confirm the link is a sign-in with email link.
-            const auth = getAuth();
-            if (isSignInWithEmailLink(auth, window.location.href)) {
-            // Additional state parameters can also be passed via URL.
-            // This can be used to continue the user's intended action before triggering
-            // the sign-in operation.
-            // Get the email if available. This should be available if the user completes
-            // the flow on the same device where they started it.
-            let email = window.localStorage.getItem('emailForSignIn');
-            if (!email) {
-                // User opened the link on a different device. To prevent session fixation
-                // attacks, ask the user to provide the associated email again. For example:
-                email = window.prompt('Please provide your email for confirmation');
-            }
-            // The client SDK will parse the code from the link for you.
-            signInWithEmailLink(auth, email, window.location.href)
-                .then((result) => {
-                // Clear email from storage.
-                window.localStorage.removeItem('emailForSignIn');
-                // You can access the new user via result.user
-                // Additional user info profile not available via:
-                // result.additionalUserInfo.profile == null
-                // You can check if the user is new or existing:
-                // result.additionalUserInfo.isNewUser
-                })
-                .catch((error) => {
-                // Some error occurred, you can inspect the code: error.code
-                // Common errors could be invalid email and invalid or expired OTPs.
-                });
-            }
-        </script>
-
+ </script>
 </html>
+
+

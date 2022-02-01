@@ -7,7 +7,6 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js" integrity="sha512-E8QSvWZ0eCLGk4km3hxSsNmGWbLtSCSUcewDQPQWZF6pEU8GlT8a5fF32wOl1i8ftdMhssTrF/OhyGWwonTcXA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
         <title>Mangan Da Kita</title>
         <link rel="stylesheet" href="style.css">
-        <!-- <link rel="register" href="register.html"> -->
     </head>
     <body>
         <section class="header">
@@ -23,7 +22,7 @@
                         <li><a href="admin.html"class="badge badge-secondary py-1 w-100">ADMIN</a></li>
                     </ul>
                 </div>
-            </nav>  
+            </nav>      
         </section>
         <section class="login">
             <div class="container">
@@ -35,29 +34,23 @@
                     <input type="checkbox" class="custom-control-input" id="customSwitch1">
                     <label class="custom-control-label" for="customSwitch1">Keep me Logged In</label>
                 </div>
-                <button href= "account.html" type="text" id="subbtn" class="btn btn-outline-primary mb-3 w-100">Login</button>
+                <button type="text" id="subbtn" class="btn btn-outline-primary mb-3 w-100">Login</button>
                 <a href="register.html" class="badge badge-secondary py-1 w-100">Create Account</a>
               </div>     
 
         </section>
         <script type="module">
-            // Import the functions you need from the SDKs you need
              import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.4/firebase-app.js";
              import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.6.4/firebase-analytics.js";
-             // TODO: Add SDKs for Firebase products that you want to use
-             // https://firebase.google.com/docs/web/setup#available-libraries
-         
-             // Your web app's Firebase configuration
-             // For Firebase JS SDK v7.20.0 and later, measurementId is optional
              const firebaseConfig = {
-             apiKey: "AIzaSyDOAwSixG-mR6rSGcCMiQRiIzeS266G_DE",
-             authDomain: "pisao-retake.firebaseapp.com",
-             databaseURL: "https://pisao-retake-default-rtdb.firebaseio.com",
-             projectId: "pisao-retake",
-             storageBucket: "pisao-retake.appspot.com",
-             messagingSenderId: "654723713413",
-             appId: "1:654723713413:web:3b6ce3aaf760c707a71cec",
-             measurementId: "G-MVZ3PVLL04"
+                apiKey: "AIzaSyCivEq77rR-5OUaCGR4vxxL3HpjqiJVcG8",
+                authDomain: "pisao-assessment.firebaseapp.com",
+                databaseURL: "https://pisao-assessment-default-rtdb.firebaseio.com",
+                projectId: "pisao-assessment",
+                storageBucket: "pisao-assessment.appspot.com",
+                messagingSenderId: "1014832089533",
+                appId: "1:1014832089533:web:3a9c0363ce81dc4abaead4",
+                measurementId: "G-D3YGV8Y9WG"
              };
            
              // Initialize Firebase
@@ -72,24 +65,41 @@
             const password = document.getElementById('passInpt');
             const submit = document.getElementById('subbtn');
 
-            //authentication
-            function AuthenticateUser(){
-                const dbref = ref(db);
+            function EmptySpaces(str){
+                return str === null || str.match (/^ *$/) !==null;
+            }      
+            function Validate(){
+                let userregis = /^[a-zA-Z0-9]{5,}$/;
 
-                get(child(dbref, "UsersList/" + username.value)).then((snapshot)=>{
+                if(EmptySpaces(username.value) || EmptySpaces(password.value)){
+                    alert("Do not leave any empty field");
+                    return false;
+                }
+                if(!userregis.test(username.value)){
+                    alert("Username can only be alphanumer\n username must be atleast 5 characters \n username cannot containe less than 5 characters");
+                    return false;
+                }
+                    return true;
+                }
+            function AuthenticateUser(){
+            if(!Validate()){
+                return;
+            }
+                const dbRef = ref(db);
+                get(child(dbRef,"UsersList/"+ username.value)).then((snapshot)=>{
                     if(snapshot.exists()){
+                        alert("User Successfully Logged In")
                         let dbpass = decPassword(snapshot.val().password);
                         if (dbpass == password.value){
-                            login();
+                            login(snapshot.val());
                         }
-                        else{
-                            alert("User does not exist");
-                        }
+                        else(
+                            alert("User Does Not Exist")
+                        )
+                        }else{
+                            alert("Username or Password Invalid")
                     }
-                    else{
-                        alert("Username or password is invalid!");
-                    }
-                })
+                });
             }
             function decPassword(dbpass){
                 var pass12 = CryptoJS.AES.decrypt(dbpass, password.value);
